@@ -63,4 +63,6 @@ def logout_v(request):
     return HttpResponseRedirect(reverse_lazy('login'))
 
 
+
+
 # Create your views here.
