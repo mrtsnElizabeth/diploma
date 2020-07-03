@@ -5,7 +5,6 @@ from django.db import models
 # Create your models here.
 
 class SimpleUser(AbstractUser):
-    date_of_birth = models.DateField(blank=True, null=True)
     email_confirmed = models.BooleanField(default=False)
     wallet = models.DecimalField(max_digits=5, decimal_places=2)
 
@@ -29,7 +28,7 @@ class Hall(models.Model):
         return f'{self.name} - {self.size}'
 
 
-class DateMovieRange:
+class DateMovieRange(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     data = models.DateTimeField(null=True, blank=True)
     ticket_price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -37,26 +36,26 @@ class DateMovieRange:
 
 class Seance(models.Model):
     name = models.CharField(max_length=200)
-    DateMovieRange = models.ForeignKey(DateMovieRange, on_delete=models.CASCADE)
+    date_movie_range = models.ForeignKey(DateMovieRange, on_delete=models.CASCADE)
     begin_t = models.TimeField(null=True, blank=True)
     end_t = models.TimeField(null=True, blank=True)
     hall_id = models.ForeignKey(Hall, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-start_at', ]
+        ordering = ['-begin_t', ]
 
     def __str__(self):
         return f'{self.name}'
 
 
-class Ticket:
+class Ticket(models.Model):
     seance_id = models.ForeignKey(Seance, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.seance_id}'
 
 
-class Purchase:
+class Purchase(models.Model):
     user = models.ForeignKey(SimpleUser, on_delete=models.CASCADE)
     seance = models.ForeignKey(Seance, on_delete=models.CASCADE)

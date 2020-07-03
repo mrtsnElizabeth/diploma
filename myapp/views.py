@@ -10,11 +10,11 @@ from django.views.generic import CreateView, FormView
 from django.views.generic.base import View
 
 from .forms import LoginForm, SignUpForm
-from .models import ShopUser
+from .models import SimpleUser
 
 
 class SignupUserCreateView(CreateView):
-    model = ShopUser
+    model = SimpleUser
     form_class = SignUpForm
     template_name = 'registration/signup.html'
 

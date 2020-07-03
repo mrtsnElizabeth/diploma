@@ -3,7 +3,7 @@ from django.contrib.auth import logout
 from django.utils.deprecation import MiddlewareMixin
 
 
-class TimeOutMiddleware(MiddlewareMixin):
+class LogoutMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         to_logout = False
